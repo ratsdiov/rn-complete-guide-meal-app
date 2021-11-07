@@ -7,7 +7,7 @@ import { enableScreens } from 'react-native-screens';
 
 import MealsNavigator from './navigation/MealsNavigator';
 
-enableScreens();
+enableScreens();  // recommended in lesson 126 for improved performance
 
 const fetchFonts = () => {
   Font.loadAsync({
