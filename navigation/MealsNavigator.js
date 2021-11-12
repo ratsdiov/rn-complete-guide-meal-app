@@ -12,7 +12,7 @@ import CategoriesScreen from '../screens/CategoriesScreen';
 import CategoryMealsScreen from '../screens/CategoryMealsScreen';
 import MealDetailScreen from '../screens/MealDetailScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
-import FiltersScreen from '../screens/FiltersScreen'
+import FiltersScreen from '../screens/FiltersScreen';
 
 import Colors from '../constants/Colors';
 import Meal from '../models/meal';
@@ -86,11 +86,30 @@ const MealsFavTabNavigator = Platform.OS === 'android'
 
 const FiltersNavigator = createStackNavigator({
     Filters: FiltersScreen,
-})
+}, {
+    // navigationOptions: {  // Example of how to override the name of the key
+    //     drawerLabel: ' Filters!!!!'
+    // },
+    defaultNavigationOptions: defaultStackNavOptions
+});
 
 const MainNavigator = createDrawerNavigator({
-    MealsFavs: MealsFavTabNavigator,
+    MealsFavs: {
+        screen: MealsFavTabNavigator,
+        navigationOptions: {
+            drawerLabel: 'Meals',
+        }
+    },
     Filters: FiltersNavigator,
-})
+},
+{
+    contentOptions: {
+        activeTintColor: Colors.accentColor,
+        labelStyle: {
+            fontFamily: 'open-sans-bold',
+        }
+    }
+}
+);
 
 export default createAppContainer(MainNavigator);
