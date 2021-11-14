@@ -95,14 +95,17 @@ const MealsFavTabNavigator = Platform.OS === 'android'
         }
     });
 
-const FiltersNavigator = createStackNavigator({
-    Filters: FiltersScreen,
-}, {
+const FiltersNavigator = createStackNavigator(
+    {
+        Filters: FiltersScreen,
+    }, 
+    // {
     // navigationOptions: {  // Example of how to override the name of the key
     //     drawerLabel: ' Filters!!!!'
     // },
-    defaultNavigationOptions: defaultStackNavOptions
-});
+    // }
+    defaultStackNavOptions
+);
 
 const MainNavigator = createDrawerNavigator({
     MealsFavs: {
