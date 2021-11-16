@@ -2,8 +2,12 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, Switch, Platform } from 'react-native';
 import { SwitchRouter } from 'react-navigation';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { useDispatch } from 'react-redux';
+
 import HeaderButton from '../components/HeaderButton';
 import Colors from '../constants/Colors';
+import { setFilters } from '../store/actions/meals';
+
 
 const FilterSwitch = props => {
     return (
@@ -26,6 +30,8 @@ const FiltersScreen = props => {
     const [isVegan, setIsVegan] = useState(false);
     const [isVegetarian, setIsVegetarian] = useState(false);
 
+    const dispatch = useDispatch();
+
     // See lesson 146 for explanation of all this at 9:30
     const saveFilters = useCallback(() => {
         const appliedFilters = {
@@ -34,9 +40,9 @@ const FiltersScreen = props => {
             vegan: isVegan,
             isVegetarian: isVegetarian,
         };
-
-        console.log(appliedFilters);
-    }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian]);
+        // console.log(appliedFilters);
+        dispatch(setFilters(appliedFilters));
+    }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian, dispatch]);
 
     function updateNavParams() {
         navigation.setParams({ save: saveFilters });
@@ -76,10 +82,10 @@ FiltersScreen.navigationOptions = navData => {
             }} />
         </HeaderButtons>,
         headerRight: () => <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item title="Save" iconName='ios-save' onPress={
-            navData.navigation.getParam('save')
-        } />
-    </HeaderButtons>
+            <Item title="Save" iconName='ios-save' onPress={
+                navData.navigation.getParam('save')
+            } />
+        </HeaderButtons>
     };
 };
 
