@@ -1,10 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList } from 'react-native';
+import { useSelector } from 'react-redux';
 
 import MealItem from './MealItem';
 
 const MealList = props => {
+    // Note useSelector can only be used at the top level of the component
+    const favoriteMeals = useSelector(state => state.meals.favoriteMeals);
+
     const renderMealItem = itemData => {
+        const isFavorite = favoriteMeals.some(meal => meal.id === itemData.item.id);
         return (
             <MealItem
                 title={itemData.item.title}
@@ -17,7 +22,9 @@ const MealList = props => {
                         routeName: 'MealDetail',
                         params: {
                             mealId: itemData.item.id,
+                            // The following are setup to ensure the initial render cycle has these available
                             mealTitle: itemData.item.title,
+                            isFav: isFavorite,
                         }
                     });
                 }} />
